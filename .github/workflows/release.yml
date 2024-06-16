@@ -1,8 +1,8 @@
-name: "Release Action"
+name: "Release Automation"
 on:
   push:
-    branches:
-      - main
+    tags:
+      - "v*.*.*"
 
 permissions:
   pull-requests: write
@@ -40,7 +40,6 @@ jobs:
           added_files: ${{ steps.changed-files.outputs.added_files }}
           deleted_files: ${{ steps.changed-files.outputs.deleted_files }}
 
-
       - name: Bump manifest version
         run: node .github/actions/bump-manifest-version.js
         env:
@@ -54,6 +53,11 @@ jobs:
           author_name: Manifest Bumper
           author_email: 41898282+github-actions[bot]@users.noreply.github.com
           message: "chore: bump manifest version to ${{ github.ref_name }}"
+
+      - name: Update tag ref
+        uses: EndBug/latest-tag@latest
+        with:
+          tag-name: ${{ github.ref_name }}
 
       - name: Bundle files
         run: |
