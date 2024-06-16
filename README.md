@@ -10,7 +10,7 @@ Dependency for creating progressbars from QB-Core or Mrlutin_lib.
   > Creates a new progress bar directly from the export, always use the built in qb-core function if possible.<br>
   > **Example:**
   > ```lua
-  >exports['progressbar']:Progress({
+  > exports['progressbar']:Progress({
   >    name = "random_task",
   >    duration = 5000,
   >    label = "Doing something",
@@ -39,7 +39,7 @@ Dependency for creating progressbars from QB-Core or Mrlutin_lib.
   > ```
   > **Props Example:**
   > ```lua
-  >exports['progressbar']:Progress({
+  > exports['progressbar']:Progress({
   >    name = "random_task",
   >    duration = 5000,
   >    label = "Doing something",
