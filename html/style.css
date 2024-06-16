@@ -18,9 +18,9 @@ body {
     display: none;
     z-index: 5;
     color: #fff;
-    width: 15%;
+    width: 20%;
     position: fixed;
-    bottom: 15%;
+    bottom: 2%;
     left: 0;
     right: 0;
     margin-left: auto;
@@ -38,7 +38,7 @@ body {
     font-size: 1.3vh;
     line-height: 4vh;
     position: relative;
-    color: #ffffff;
+    color: rgba(0, 0, 0, 0.75);
     z-index: 10;
     font-weight: bold;
 }
