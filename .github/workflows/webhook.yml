@@ -59,7 +59,7 @@ jobs:
         run: |
           mkdir -p ./temp/mrlutin
           cp ./{client.lua,fxmanifest.lua} ./temp/mrlutin
-          cp -r ./{html} ./temp/mrlutin
+          cp -r ./html ./temp/mrlutin
           cd ./temp && zip -r ../progressbar.zip ./mrlutin
 
       - name: Create Release
