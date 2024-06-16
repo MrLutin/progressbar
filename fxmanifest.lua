@@ -4,7 +4,7 @@ game 'gta5'
 
 author 'qbcore-framework, mrlutin'
 description 'Dependency for creating progressbars with custom look'
-version 'main'
+version '1.0.0'
 
 ui_page 'html/index.html'
 
