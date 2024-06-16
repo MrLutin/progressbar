@@ -1,0 +1,49 @@
+name: "Webhook Action"
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  message:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v40
+
+      - name: Format changed files
+        run: |
+          echo "ADDED_FILES=$(echo "${{ steps.changed-files.outputs.added_files }}" | sed 's/ /\\n/g')" >> $GITHUB_ENV
+          echo "DELETED_FILES=$(echo "${{ steps.changed-files.outputs.deleted_files }}" | sed 's/ /\\n/g')" >> $GITHUB_ENV
+          echo "MODIFIED_FILES=$(echo "${{ steps.changed-files.outputs.modified_files }}" | sed 's/ /\\n/g')" >> $GITHUB_ENV
+          echo "REPO_NAME=${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/}" >> $GITHUB_ENV
+
+      - uses: ./.github/actions/init_content
+        with:
+          commit_message: ${{ github.event.head_commit.message }}
+          modified_files: ${{ steps.changed-files.outputs.modified_files }}
+          added_files: ${{ steps.changed-files.outputs.added_files }}
+          deleted_files: ${{ steps.changed-files.outputs.deleted_files }}
+
+      - uses: tsickert/discord-webhook@v5.3.0
+        name: Discord Webhook Action
+        with:
+          webhook-url: "https://discord.com/api/webhooks/1181595040754192495/2h3X1XFMXNAPfO7cx2cwVrbMtlhBfEgGdVof6UUb-biobQpy5d_j3p2JpJDjPHSgMt0p"
+          username: "Mrlutin's Scripts"
+          avatar-url: https://cdn.mrlutin.dev/apps/default.jpg
+          embed-title: ${{ env.COMMIT_TITLE }}
+          embed-description: ${{env.CHANGED_LIST}}
+          embed-author-name: "Resource - ${{env.REPO_NAME}}"
+          embed-author-url: "https://mrlutin.tebex.io/"
+          embed-footer-text: "Ceci est un message automatiser."
+          embed-color: 15430476
+          embed-timestamp: ${{ github.event.head_commit.timestamp }}
